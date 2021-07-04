@@ -50,7 +50,7 @@ public class MultipleDataSourceAutoConfiguration {
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.primary.hikari")
-    HikariDataSource primaryDataSource(DataSourceProperties properties) {
+    public HikariDataSource primaryDataSource(DataSourceProperties properties) {
         HikariDataSource dataSource = createDataSource(properties, HikariDataSource.class);
         if (StringUtils.hasText(properties.getName())) {
             dataSource.setPoolName(properties.getName());
@@ -61,7 +61,7 @@ public class MultipleDataSourceAutoConfiguration {
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.secondary.hikari")
     @ConditionalOnProperty(name = "spring.datasource.secondary.type", havingValue = "com.zaxxer.hikari.HikariDataSource")
-    HikariDataSource secondaryDataSource(DataSourceProperties properties) {
+    public HikariDataSource secondaryDataSource(DataSourceProperties properties) {
         HikariDataSource dataSource = createDataSource(properties, HikariDataSource.class);
         if (StringUtils.hasText(properties.getName())) {
             dataSource.setPoolName(properties.getName());
@@ -71,18 +71,18 @@ public class MultipleDataSourceAutoConfiguration {
 
     @Bean
     @Primary
-    public DynamicRoutingDataSourceResolver dynamicRoutingDataSourceResolver() {
-        log.debug("動的DB切り替え");
-        DataSourceContextHolder.setDataSourceType(currentDataSource.getCurrent());
+    public DynamicRoutingDataSourceResolver dataSource() {
+        DataSourceContextHolder.setDataSourceType(this.currentDataSource.getCurrent());
         DynamicRoutingDataSourceResolver resolver = new DynamicRoutingDataSourceResolver();
+        log.debug("current DataSourceType:" + this.currentDataSource.getCurrent());
 
         Map<Object, Object> dataSources = Maps.newLinkedHashMap();
         dataSources.put(DataSourceType.PRIMARY.getDataSourceName(), primaryDataSource(primaryDataSourceProperties()));
-        dataSources.put(DataSourceType.SECONDARY.getDataSourceName(),
-                secondaryDataSource(secondaryDataSourceProperties()));
+        // @formatter:off
+        dataSources.put(DataSourceType.SECONDARY.getDataSourceName(), secondaryDataSource(secondaryDataSourceProperties()));
+        // @formatter:on
 
         resolver.setTargetDataSources(dataSources);
-
         if (DataSourceType.PRIMARY == this.currentDataSource.getCurrent()) {
             resolver.setDefaultTargetDataSource(primaryDataSource(primaryDataSourceProperties()));
         } else if (DataSourceType.SECONDARY == this.currentDataSource.getCurrent()) {

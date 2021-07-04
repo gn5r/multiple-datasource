@@ -10,9 +10,9 @@ import org.seasar.doma.jdbc.entity.NamingType;
  *
  * @author gn5r
  */
-@Entity(listener = TestListener.class, naming = NamingType.SNAKE_LOWER_CASE)
-@Table(name = "test")
-public class Test {
+@Entity(listener = TestTblListener.class, naming = NamingType.SNAKE_LOWER_CASE)
+@Table(name = "test_tbl")
+public class TestTbl {
 
     /** ID */
     @Id

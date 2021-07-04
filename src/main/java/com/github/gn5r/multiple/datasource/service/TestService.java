@@ -1,7 +1,7 @@
 package com.github.gn5r.multiple.datasource.service;
 
-import com.github.gn5r.multiple.datasource.entity.Test;
-import com.github.gn5r.multiple.datasource.repository.TestDao;
+import com.github.gn5r.multiple.datasource.entity.TestTbl;
+import com.github.gn5r.multiple.datasource.repository.TestTblDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class TestService {
     
     @Autowired
-    private TestDao testDao;
+    private TestTblDao testTblDao;
 
-    public Test getTestData(Integer id) {
-        return testDao.selectById(id);
+    public TestTbl getTestData(Integer id) {
+        return testTblDao.selectById(id);
     }
 }

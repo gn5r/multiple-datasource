@@ -1,7 +1,7 @@
 package com.github.gn5r.multiple.datasource.repository;
 
-import com.github.gn5r.multiple.datasource.config.AppConfig;
-import com.github.gn5r.multiple.datasource.entity.Test;
+import com.github.gn5r.multiple.datasource.entity.TestTbl;
+import com.github.gn5r.multiple.datasource.jdbc.DomaConfig;
 import org.seasar.doma.Dao;
 import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
@@ -14,34 +14,34 @@ import org.seasar.doma.boot.ConfigAutowireable;
  * @author gn5r
  */
 @ConfigAutowireable
-@Dao(config = AppConfig.class)
-public interface TestDao {
+@Dao(config = DomaConfig.class)
+public interface TestTblDao {
 
     /**
      * @param id
-     * @return the Test entity
+     * @return the TestTbl entity
      */
     @Select
-    Test selectById(Integer id);
+    TestTbl selectById(Integer id);
 
     /**
      * @param entity
      * @return affected rows
      */
     @Insert
-    int insert(Test entity);
+    int insert(TestTbl entity);
 
     /**
      * @param entity
      * @return affected rows
      */
     @Update
-    int update(Test entity);
+    int update(TestTbl entity);
 
     /**
      * @param entity
      * @return affected rows
      */
     @Delete
-    int delete(Test entity);
+    int delete(TestTbl entity);
 }

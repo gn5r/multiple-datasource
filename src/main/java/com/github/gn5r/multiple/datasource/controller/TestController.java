@@ -1,6 +1,8 @@
 package com.github.gn5r.multiple.datasource.controller;
 
-import com.github.gn5r.multiple.datasource.entity.Test;
+import com.github.gn5r.multiple.datasource.entity.TestTbl;
+import com.github.gn5r.multiple.datasource.jdbc.DataSourceContextHolder;
+import com.github.gn5r.multiple.datasource.jdbc.DataSourceType;
 import com.github.gn5r.multiple.datasource.service.TestService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,15 @@ public class TestController {
 
     @GetMapping("get/{id}")
     public ResponseEntity<?> getTest(@PathVariable String id) {
-        Test test = testService.getTestData(Integer.parseInt(id));
-        return new ResponseEntity<Test>(test, HttpStatus.OK);
+        DataSourceContextHolder.setDataSourceType(DataSourceType.PRIMARY);
+        TestTbl test = testService.getTestData(Integer.parseInt(id));
+        return new ResponseEntity<TestTbl>(test, HttpStatus.OK);
+    }
+
+    @GetMapping("get2/{id}")
+    public ResponseEntity<?> getTest2(@PathVariable String id) {
+        // DataSourceContextHolder.setDataSourceType(DataSourceType.SECONDARY);
+        TestTbl test = testService.getTestData(Integer.parseInt(id));
+        return new ResponseEntity<TestTbl>(test, HttpStatus.OK);
     }
 }

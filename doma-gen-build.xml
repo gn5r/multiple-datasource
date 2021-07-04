@@ -10,11 +10,11 @@
 	<property name="password" value="manager"/>
 	<property name="entityPackageName" value="com.github.gn5r.multiple.datasource.entity"/>
 	<property name="daoPackageName" value="com.github.gn5r.multiple.datasource.repository"/>
-	<property name="configClassName" value="com.github.gn5r.multiple.datasource.config.AppConfig"/>
+	<property name="configClassName" value="com.github.gn5r.multiple.datasource.jdbc.DomaConfig"/>
 	<property name="sqlFilePattern" value="META-INF/**/*.sql"/>
 	<property name="templatePrimaryDir" value="src/main/resources/doma/template"/>
 	<property name="tableTypes" value="TABLE,VIEW"/>
-	<property name="tableNamePattern" value="test"/>
+	<property name="tableNamePattern" value="test_tbl"/>
 	<property name="useAccessor" value="true"/>
 	<property name="namingType" value="snake_lower_case"/>
 	<property name="useListener" value="true"/>
